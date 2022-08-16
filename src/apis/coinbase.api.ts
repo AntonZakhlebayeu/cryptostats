@@ -6,6 +6,7 @@ export const coinbaseApi = createApi({
     baseUrl: "/coinbase",
   }),
   endpoints: (build) => ({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     getPrimaryAccountTransactions: build.query<any, undefined>({
       query: () => ({ url: "/" }),
     }),

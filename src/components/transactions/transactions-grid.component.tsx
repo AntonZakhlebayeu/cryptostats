@@ -30,6 +30,7 @@ function TransactionsGrid() {
           </TableHead>
           <TableBody>
             {data?.data &&
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               data.data.map((transaction: any) => (
                 <TableRow
                   key={transaction.id}
