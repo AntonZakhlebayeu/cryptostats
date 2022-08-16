@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, TextField, Link as MuiLink } from "@mui/material";
 import { Link } from "react-router-dom";
 
-function LoginForm() {
+function SignUpForm() {
   const [email, setEmail] = useState("");
   const [emailErrored, setEmailErrored] = useState(false);
 
@@ -46,15 +46,15 @@ function LoginForm() {
           onChange={(event) => setPassword(event.target.value)}
           error={passwordErrored}
         />
-        <Link to="/signup" className="justify-self-start self-start mt-2">
-          <MuiLink>Sign Up</MuiLink>
+        <Link to="/login" className="justify-self-start self-start mt-2">
+          <MuiLink>Login</MuiLink>
         </Link>
       </div>
       <Button variant="contained" className="w-80" onClick={handleSignUp}>
-        <span className="p-1">Login</span>
+        <span className="p-1">Sign up</span>
       </Button>
     </div>
   );
 }
 
-export default LoginForm;
+export default SignUpForm;
