@@ -1,15 +1,24 @@
 import React, { useState } from "react";
 import { Button, TextField, Link as MuiLink } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../../../apis/auth.api";
+import { User } from "../../../models/User";
+import { useAppDispatch } from "../../../app/hooks";
+import { setAuthState } from "../../../slices/auth.slice";
 
-function SignUpForm() {
+function LoginForm() {
   const [email, setEmail] = useState("");
   const [emailErrored, setEmailErrored] = useState(false);
 
   const [password, setPassword] = useState("");
   const [passwordErrored, setPasswordErrored] = useState(false);
 
-  const handleSignUp = () => {
+  const [login] = useLoginMutation();
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleSignUp = async () => {
     if (!email) {
       setEmailErrored(true);
     } else {
@@ -19,6 +28,13 @@ function SignUpForm() {
       setPasswordErrored(true);
     } else {
       setPasswordErrored(false);
+    }
+    try {
+      const response = (await login({ email, password })) as { data: User };
+      dispatch(setAuthState({ user: response.data }));
+      navigate("/");
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -46,15 +62,15 @@ function SignUpForm() {
           onChange={(event) => setPassword(event.target.value)}
           error={passwordErrored}
         />
-        <Link to="/login" className="justify-self-start self-start mt-2">
-          <MuiLink>Login</MuiLink>
+        <Link to="/signup" className="justify-self-start self-start mt-2">
+          <MuiLink>Sign Up</MuiLink>
         </Link>
       </div>
       <Button variant="contained" className="w-80" onClick={handleSignUp}>
-        <span className="p-1">Sign up</span>
+        <span className="p-1">Login</span>
       </Button>
     </div>
   );
 }
 
-export default SignUpForm;
+export default LoginForm;
